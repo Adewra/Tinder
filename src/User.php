@@ -42,7 +42,7 @@ class User {
 
     }
 
-    function loadFromAuthenticationResponse($authenticationResponse)
+    public function loadFromAuthenticationResponse($authenticationResponse)
     {
         if(isset($authenticationResponse['_id']))
             $this->setIdentifier($authenticationResponse['_id']);
@@ -102,112 +102,112 @@ class User {
             $this->setVersions($authenticationResponse['versions']);
     }
 
-    function getIdentifier()
+    public function getIdentifier()
     {
         return $this->_id;
     }
 
-    function setIdentifier($identifier)
+    private function setIdentifier($identifier)
     {
         $this->_id = $identifier;
     }
 
-    function getActiveTime()
+    public function getActiveTime()
     {
         return $this->activeTime;
     }
 
-    function setActiveTime($activeTime)
+    private function setActiveTime($activeTime)
     {
         $this->activeTime = $activeTime;
     }
 
-    function getCreateDate()
+    public function getCreateDate()
     {
         return $this->createDate;
     }
 
-    function setCreateDate($createDate)
+    private function setCreateDate($createDate)
     {
         $this->createDate = $createDate;
     }
 
-    function getAgeFilterMaximum()
+    public function getAgeFilterMaximum()
     {
         return $this->ageFilterMax;
     }
 
-    function setAgeFilterMaximum($ageFilterMaximum)
+    private function setAgeFilterMaximum($ageFilterMaximum)
     {
         $this->ageFilterMax = $ageFilterMaximum;
     }
 
-    function getAgeFilterMinimum()
+    public function getAgeFilterMinimum()
     {
         return $this->ageFilterMin;
     }
 
-    function setAgeFilterMinimum($ageFilterMinimum)
+    private function setAgeFilterMinimum($ageFilterMinimum)
     {
         $this->ageFilterMin = $ageFilterMinimum;
     }
 
-    function getAPIToken()
+    public function getAPIToken()
     {
         return $this->apiToken;
     }
 
-    function setAPIToken($apiToken)
+    private function setAPIToken($apiToken)
     {
         $this->apiToken = $apiToken;
     }
 
-    function getBio()
+    public function getBio()
     {
         return $this->bio;
     }
 
-    function setBio($bio)
+    private function setBio($bio)
     {
         $this->bio = $bio;
     }
 
-    function getBirthDate()
+    public function getBirthDate()
     {
         return $this->birthDate;
     }
 
-    function setBirthDate($birthDate)
+    private function setBirthDate($birthDate)
     {
         $this->birthDate = $birthDate;
     }
 
-    function getDistanceFilter()
+    public function getDistanceFilter()
     {
         return $this->distanceFilter;
     }
 
-    function setDistanceFilter($distanceFilter)
+    private function setDistanceFilter($distanceFilter)
     {
         $this->distanceFilter = $distanceFilter;
     }
 
-    function getFullName()
+    public function getFullName()
     {
         return $this->fullName;
     }
 
-    function setFullName($fullName)
+    private function setFullName($fullName)
     {
         $this->fullName = $fullName;
     }
 
-    function getGroups()
+    public function getGroups()
     {
         return $this->groups;
     }
 
-    function setGroups($groups)
+    private function setGroups($groups)
     {
         foreach($groups as $group)
         {
@@ -215,17 +215,17 @@ class User {
         }
     }
 
-    function addGroup($group)
+    private function addGroup($group)
     {
         array_push($this->groups, $group);
     }
 
-    function getGender()
+    public function getGender()
     {
         return $this->gender;
     }
 
-    function setGender($gender)
+    private function setGender($gender)
     {
         $this->gender = $gender;
     }
@@ -235,17 +235,17 @@ class User {
         return $this->genderFilter;
     }
 
-    function setGenderFilter($genderFilter)
+    private function setGenderFilter($genderFilter)
     {
         $this->genderFilter = $genderFilter;
     }
 
-    function getName()
+    public function getName()
     {
         return $this->name;
     }
 
-    function setName($name)
+    private function setName($name)
     {
         $this->name = $name;
     }
@@ -255,27 +255,27 @@ class User {
         return $this->pingTime;
     }
 
-    function setPingTime($pingTime)
+    private function setPingTime($pingTime)
     {
         $this->pingTime = $pingTime;
     }
 
-    function getDiscoverable()
+    public function getDiscoverable()
     {
         return $this->discoverable;
     }
 
-    function setDiscoverable($discoverable)
+    private function setDiscoverable($discoverable)
     {
         $this->discoverable = $discoverable;
     }
 
-    function getPhotos()
+    public function getPhotos()
     {
         return $this->photos;
     }
 
-    function setPhotos($photos)
+    private function setPhotos($photos)
     {
         foreach($photos as $photo)
         {
@@ -285,17 +285,17 @@ class User {
         }
     }
 
-    function addPhoto($photo)
+    private function addPhoto($photo)
     {
         array_push($this->photos, $photo);
     }
 
-    function getPurchases()
+    public function getPurchases()
     {
         return $this->purchases;
     }
 
-    function setPurchases($purchases)
+    private function setPurchases($purchases)
     {
         foreach($purchases as $purchase)
         {
@@ -303,17 +303,17 @@ class User {
         }
     }
 
-    function addPurchase($purchase)
+    private function addPurchase($purchase)
     {
         array_push($this->purchases, $purchase);
     }
 
-    function getVersions()
+    public function getVersions()
     {
         return $this->versions;
     }
 
-    function setVersions($versions)
+    private function setVersions($versions)
     {
         /*
          *  ["versions"]=>
@@ -338,17 +338,17 @@ class User {
         }
     }
 
-    function addVersion($version)
+    private function addVersion($version)
     {
         array_push($this->versions, $version);
     }
 
-    function getGlobals()
+    public function getGlobals()
     {
         return $this->globals;
     }
 
-    function setGlobals($globals)
+    private function setGlobals($globals)
     {
         /*
          *  ["globals"]=>
@@ -399,7 +399,7 @@ class User {
         }
     }
 
-    function addGlobal($global)
+    private function addGlobal($global)
     {
         array_push($this->globals, $global);
     }
