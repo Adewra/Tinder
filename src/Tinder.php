@@ -15,11 +15,13 @@ namespace Adewra\Tinder;
 require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
+use Adewra\Tinder\User;
 
 class Tinder {
 
     private $client;
     private $tinderAuthenticationToken;
+    private $user;
 
     function __construct()
     {
@@ -42,6 +44,11 @@ class Tinder {
         return $this->tinderAuthenticationToken;
     }
 
+    function getUser()
+    {
+        return $this->user;
+    }
+
     function setTinderAuthenticationToken($token)
     {
         if(strlen($token) != 36)
@@ -52,6 +59,11 @@ class Tinder {
 
         $this->tinderAuthenticationToken = $token;
         $this->client->setDefaultOption('headers/X-Auth-Token', $token);
+    }
+
+    function setTinderUser(User $user)
+    {
+        $this->user = $user;
     }
 
     function requestTinderAuthenticationToken($facebookIdentifier, $facebookAuthenticationToken)
@@ -68,6 +80,10 @@ class Tinder {
         {
             $response = $guzzleResponse->json();
             $this->setTinderAuthenticationToken($response['token']);
+
+            $user = new User();
+            $user->loadFromAuthenticationResponse($response['user']);
+            $this->setTinderUser($user);
         }
     }
 } 
