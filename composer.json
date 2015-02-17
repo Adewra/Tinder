@@ -1,0 +1,21 @@
+{
+    "name": "adewra/Tinder",
+    "description": "A PHP Package for using Tinder's API",
+    "license": "GPL-3.0",
+    "keywords": ["tinder", "matchmaking", "dating"],
+    "authors": [
+        {
+            "name": "Ally Dewar",
+            "email": "ally.dewar@adewra.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Adewra\\Tinder\\": "src"
+        }
+    }
+}
