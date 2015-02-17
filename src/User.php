@@ -112,7 +112,7 @@ class User {
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
 
-            throw new Exception("Not Implemented");
+            throw new \Exception("Not Implemented");
         }
     }
 
@@ -129,7 +129,7 @@ class User {
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
 
-            throw new Exception("Not Implemented");
+            throw new \Exception("Not Implemented");
         }
     }
 
@@ -137,6 +137,7 @@ class User {
     {
         $payload = json_encode(
             array(
+                "discoverable" => $this->getDiscoverable(),
                 "gender" => $this->getGender(),
                 "age_filter_min" => $this->getAgeFilterMinimum(),
                 "age_filter_max" => $this->getAgeFilterMaximum(),
@@ -147,7 +148,7 @@ class User {
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
 
-            throw new Exception("Not Implemented");
+            throw new \Exception("Not Implemented");
         }
     }
 
@@ -341,6 +342,12 @@ class User {
     private function setDiscoverable($discoverable)
     {
         $this->discoverable = $discoverable;
+    }
+
+    public function updateDiscoverable($discoverable)
+    {
+        $this->discoverable = $discoverable;
+        $this->updateProfile();
     }
 
     public function getPhotos()

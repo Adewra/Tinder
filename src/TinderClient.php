@@ -87,6 +87,50 @@ class TinderClient {
         }
     }
 
+    public function getPotentialMatches()
+    {
+        $guzzleResponse = $this->guzzleClient->post('/user/recs', []);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+
+            throw new \Exception("Not Implemented");
+
+        }
+    }
+
+    public function likeSomebody($tinderIdentifier)
+    {
+        $guzzleResponse = $this->guzzleClient->post('/like/'.$tinderIdentifier, []);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+
+            throw new \Exception("Not Implemented");
+
+            if($response['match'] == true) {
+
+            } else if($response['match'] == false) {
+
+            }
+
+        }
+    }
+
+    public function passSomebody($tinderIdentifier)
+    {
+        $guzzleResponse = $this->guzzleClient->post('/pass/'.$tinderIdentifier, []);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+
+            throw new \Exception("Not Implemented");
+
+            if($response['match'] == true) {
+
+            } else if($response['match'] == false) {
+
+            }
+        }
+    }
+
     public function reportUser($tinderIdentifier, $cause)
     {
         $payload = json_encode(
