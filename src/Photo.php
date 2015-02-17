@@ -33,7 +33,7 @@ class Photo {
 
     }
 
-    function loadFromAuthenticationResponse($authenticationResponse)
+    public function loadFromAuthenticationResponse($authenticationResponse)
     {
 
         if(isset($authenticationResponse['id']))
@@ -70,114 +70,114 @@ class Photo {
             $this->setYOffsetPercent($authenticationResponse['yoffset_percent']);
     }
 
-    function getIdentifier()
+    public function getIdentifier()
     {
         return $this->id;
     }
 
-    function setIdentifier($identifier)
+    private function setIdentifier($identifier)
     {
         $this->id = $identifier;
     }
 
-    function getURL()
+    public function getURL()
     {
         return $this->url;
     }
 
-    function setURL($url)
+    private function setURL($url)
     {
         $this->url = $url;
     }
 
-    function getProcessedFiles()
+    public function getProcessedFiles()
     {
         return $this->processedFiles;
     }
 
-    function setProcessedFiles($processedFiles)
+    private function setProcessedFiles($processedFiles)
     {
         foreach($processedFiles as $processedFile) {
             array_push($this->processedFiles, $processedFile);
         }
     }
 
-    function getExtension()
+    public function getExtension()
     {
         return $this->extension;
     }
 
-    function setExtension($extension)
+    private function setExtension($extension)
     {
         $this->extension = $extension;
     }
 
-    function getFacebookIdentifier()
+    public function getFacebookIdentifier()
     {
         return $this->fbId;
     }
 
-    function setFacebookIdentifier($facebookIdentifier)
+    private function setFacebookIdentifier($facebookIdentifier)
     {
         $this->fbId = $facebookIdentifier;
     }
 
-    function getFileName()
+    public function getFileName()
     {
         return $this->fileName;
     }
 
-    function setFileName($fileName)
+    private function setFileName($fileName)
     {
         $this->fileName = $fileName;
     }
 
-    function getMain()
+    public function getMain()
     {
         return $this->main;
     }
 
-    function setMain($main)
+    private function setMain($main)
     {
         $this->main = $main;
     }
 
-    function getYDistancePercent()
+    public function getYDistancePercent()
     {
         return $this->yDistancePercent;
     }
 
-    function setYDistancePercent($yDistancePercent)
+    private function setYDistancePercent($yDistancePercent)
     {
         $this->yDistancePercent = $yDistancePercent;
     }
 
-    function getXDistancePercent()
+    public function getXDistancePercent()
     {
         return $this->xDistancePercent;
     }
 
-    function setXDistancePercent($xDistancePercent)
+    private function setXDistancePercent($xDistancePercent)
     {
         $this->xDistancePercent = $xDistancePercent;
     }
 
-    function getYOffsetPercent()
+    public function getYOffsetPercent()
     {
         return $this->yOffsetPercent;
     }
 
-    function setYOffsetPercent($yOffsetPercent)
+    private function setYOffsetPercent($yOffsetPercent)
     {
         $this->yOffsetPercent = $yOffsetPercent;
     }
 
-    function getXOffsetPercent()
+    public function getXOffsetPercent()
     {
         return $this->xOffsetPercent;
     }
 
-    function setXOffsetPercent($xOffsetPercent)
+    private function setXOffsetPercent($xOffsetPercent)
     {
         $this->xOffsetPercent = $xOffsetPercent;
     }

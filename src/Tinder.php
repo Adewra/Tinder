@@ -39,17 +39,17 @@ class Tinder {
             ]);
     }
 
-    function getTinderAuthenticationToken()
+    public function getTinderAuthenticationToken()
     {
         return $this->tinderAuthenticationToken;
     }
 
-    function getUser()
+    public function getUser()
     {
         return $this->user;
     }
 
-    function setTinderAuthenticationToken($token)
+    private function setTinderAuthenticationToken($token)
     {
         if(strlen($token) != 36)
             throw new Exception("The supplied Tinder Authentication Token is not in UUID4 format, it should be 36 characters long (including dashes).");
@@ -61,12 +61,12 @@ class Tinder {
         $this->client->setDefaultOption('headers/X-Auth-Token', $token);
     }
 
-    function setTinderUser(User $user)
+    private function setTinderUser(User $user)
     {
         $this->user = $user;
     }
 
-    function requestTinderAuthenticationToken($facebookIdentifier, $facebookAuthenticationToken)
+    public function requestTinderAuthenticationToken($facebookIdentifier, $facebookAuthenticationToken)
     {
         $payload = json_encode(
             array(
