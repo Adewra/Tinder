@@ -25,7 +25,7 @@ class TinderClient {
 
     function __construct()
     {
-        $this->$guzzleClient = new Client([
+        $this->guzzleClient = new Client([
                 'base_url' => ['https://api.gotinder.com', []],
                 'defaults' => [
                     'headers' => [  'X-Auth-Token'  =>  '00000000-0000-4000-A000-000000000000',
