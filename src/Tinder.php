@@ -81,9 +81,23 @@ class Tinder {
             $response = $guzzleResponse->json();
             $this->setTinderAuthenticationToken($response['token']);
 
-            $user = new User();
+            $user = new User($this);
             $user->loadFromAuthenticationResponse($response['user']);
             $this->setTinderUser($user);
+        }
+    }
+
+    public function reportUser($tinderIdentifier, $cause)
+    {
+        $payload = json_encode(
+            array(
+                "cause" => $cause
+            )
+        );
+
+        $guzzleResponse = $this->client->post('/report/'.$tinderIdentifier, ['body' => $payload]);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
         }
     }
 } 

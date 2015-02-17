@@ -16,6 +16,8 @@ namespace Adewra\Tinder;
 class User {
 
     /* Fields */
+    private $client
+
     private $_id;
     private $activeTime;
     private $createDate;
@@ -37,9 +39,9 @@ class User {
     private $globals = array();
     private $purchases = array();
 
-    function __construct()
+    function __construct(Tinder $client)
     {
-
+        $this->client = $client;
     }
 
     public function loadFromAuthenticationResponse($authenticationResponse)
@@ -102,6 +104,22 @@ class User {
             $this->setVersions($authenticationResponse['versions']);
     }
 
+    private function updateProfile()
+    {
+        $payload = json_encode(
+            array(
+                "gender" => $this->getGender(),
+                "age_filter_min" => $this->getAgeFilterMinimum(),
+                "age_filter_max" => $this->getAgeFilterMaximum(),
+                "distance_filter" => $this->getDistanceFilter()
+            )
+        );
+        $guzzleResponse = $this->client->post('/profile', ['body' => $payload]);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+        }
+    }
+
     public function getIdentifier()
     {
         return $this->_id;
@@ -142,6 +160,12 @@ class User {
         $this->ageFilterMax = $ageFilterMaximum;
     }
 
+    public function updateAgeFilterMaximum($ageFilterMaximum)
+    {
+        $this->ageFilterMax = $ageFilterMaximum;
+        $this->updateProfile();
+    }
+
     public function getAgeFilterMinimum()
     {
         return $this->ageFilterMin;
@@ -150,6 +174,12 @@ class User {
     private function setAgeFilterMinimum($ageFilterMinimum)
     {
         $this->ageFilterMin = $ageFilterMinimum;
+    }
+
+    public function updateAgeFilterMinimum($ageFilterMinimum)
+    {
+        $this->ageFilterMin = $ageFilterMinimum;
+        $this->updateProfile();
     }
 
     public function getAPIToken()
@@ -192,6 +222,12 @@ class User {
         $this->distanceFilter = $distanceFilter;
     }
 
+    public function updateDistanceFilter($distanceFilter)
+    {
+        $this->distanceFilter = $distanceFilter;
+        $this->updateProfile();
+    }
+
     public function getFullName()
     {
         return $this->fullName;
@@ -228,6 +264,12 @@ class User {
     private function setGender($gender)
     {
         $this->gender = $gender;
+    }
+
+    public function updateGender($gender)
+    {
+        $this->gender = $gender;
+        $this->updateProfile();
     }
 
     function getGenderFilter()
