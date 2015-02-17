@@ -49,7 +49,16 @@ class User {
             $this->setIdentifier($authenticationResponse['_id']);
 
         if(isset($authenticationResponse['active_time']))
-            $this->setIdentifier($authenticationResponse['active_time']);
+            $this->setActiveTime($authenticationResponse['active_time']);
+
+        if(isset($authenticationResponse['create_date']))
+            $this->setCreateDate($authenticationResponse['create_date']);
+
+        if(isset($authenticationResponse['age_filter_max']))
+            $this->setAgeFilterMaximum($authenticationResponse['age_filter_max']);
+
+        if(isset($authenticationResponse['age_filter_min']))
+            $this->setAgeFilterMinimum($authenticationResponse['age_filter_min']);
     }
 
     function getIdentifier()
@@ -80,5 +89,25 @@ class User {
     function setCreateDate($createDate)
     {
         $this->createDate = $createDate;
+    }
+
+    function getAgeFilterMaximum()
+    {
+        return $this->ageFilterMax;
+    }
+
+    function setAgeFilterMaximum($ageFilterMaximum)
+    {
+        $this->ageFilterMax = $ageFilterMaximum;
+    }
+
+    function getAgeFilterMinimum()
+    {
+        return $this->ageFilterMin;
+    }
+
+    function setAgeFilterMinimum($ageFilterMinimum)
+    {
+        $this->ageFilterMin = $ageFilterMinimum;
     }
 } 
