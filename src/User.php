@@ -13,10 +13,13 @@
 namespace Adewra\Tinder;
 
 
+use GuzzleHttp\Client;
+
 class User {
 
     /* Fields */
-    private $client
+    private $guzzleClient;
+    private $messages = array();
 
     private $_id;
     private $activeTime;
@@ -39,7 +42,7 @@ class User {
     private $globals = array();
     private $purchases = array();
 
-    function __construct(Tinder $client)
+    function __construct(Client $client)
     {
         $this->client = $client;
     }
@@ -114,7 +117,7 @@ class User {
                 "distance_filter" => $this->getDistanceFilter()
             )
         );
-        $guzzleResponse = $this->client->post('/profile', ['body' => $payload]);
+        $guzzleResponse = $this->guzzleClient->post('/profile', ['body' => $payload]);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
         }

@@ -17,15 +17,15 @@ require 'vendor/autoload.php';
 use GuzzleHttp\Client;
 use Adewra\Tinder\User;
 
-class Tinder {
+class TinderClient {
 
-    private $client;
+    private $guzzleClient;
     private $tinderAuthenticationToken;
     private $user;
 
     function __construct()
     {
-        $this->client = new Client([
+        $this->$guzzleClient = new Client([
                 'base_url' => ['https://api.gotinder.com', []],
                 'defaults' => [
                     'headers' => [  'X-Auth-Token'  =>  '00000000-0000-4000-A000-000000000000',
@@ -58,7 +58,7 @@ class Tinder {
         //    throw new Exception("The supplied Tinder Authentication Token is not in UUID4 format.");
 
         $this->tinderAuthenticationToken = $token;
-        $this->client->setDefaultOption('headers/X-Auth-Token', $token);
+        $this->guzzleClient->setDefaultOption('headers/X-Auth-Token', $token);
     }
 
     private function setTinderUser(User $user)
@@ -75,13 +75,13 @@ class Tinder {
             )
         );
 
-        $guzzleResponse = $this->client->post('/auth', ['body' => $payload, 'debug' => true]);
+        $guzzleResponse = $this->guzzleClient->post('/auth', ['body' => $payload, 'debug' => true]);
         if ($guzzleResponse->getBody())
         {
             $response = $guzzleResponse->json();
             $this->setTinderAuthenticationToken($response['token']);
 
-            $user = new User($this);
+            $user = new User($this->guzzleClient);
             $user->loadFromAuthenticationResponse($response['user']);
             $this->setTinderUser($user);
         }
@@ -95,7 +95,7 @@ class Tinder {
             )
         );
 
-        $guzzleResponse = $this->client->post('/report/'.$tinderIdentifier, ['body' => $payload]);
+        $guzzleResponse = $this->guzzleClient->post('/report/'.$tinderIdentifier, ['body' => $payload]);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
         }
