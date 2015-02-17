@@ -12,7 +12,6 @@
 
 namespace Adewra\Tinder;
 
-
 use GuzzleHttp\Client;
 
 class User {
@@ -107,6 +106,33 @@ class User {
             $this->setVersions($authenticationResponse['versions']);
     }
 
+    public function fetchUpdates()
+    {
+        $guzzleResponse = $this->guzzleClient->get('/updates', []);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+
+            throw new Exception("Not Implemented");
+        }
+    }
+
+    public function updateLocation($latitude, $longitude)
+    {
+        $payload = json_encode(
+            array(
+                "lat" => $latitude,
+                "lon" => $longitude
+            )
+        );
+
+        $guzzleResponse = $this->guzzleClient->post('/user/ping', ['body' => $payload]);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+
+            throw new Exception("Not Implemented");
+        }
+    }
+
     private function updateProfile()
     {
         $payload = json_encode(
@@ -117,9 +143,11 @@ class User {
                 "distance_filter" => $this->getDistanceFilter()
             )
         );
-        $guzzleResponse = $this->guzzleClient->post('/profile', ['body' => $payload]);
+        $guzzleResponse = $this->guzzleClient->post('/profile', ['body' => $payload, 'debug' => true]);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
+
+            throw new Exception("Not Implemented");
         }
     }
 
