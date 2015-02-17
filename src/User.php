@@ -44,8 +44,6 @@ class User {
 
     function loadFromAuthenticationResponse($authenticationResponse)
     {
-        var_dump($authenticationResponse);
-
         if(isset($authenticationResponse['_id']))
             $this->setIdentifier($authenticationResponse['_id']);
 
@@ -281,8 +279,9 @@ class User {
     {
         foreach($photos as $photo)
         {
-            //$photoObject = Photo->loadFromAuthenticationResponse($photo);
-            //$this->addPhoto($photoObject);
+            $photoObject = new Photo();
+            $photoObject->loadFromAuthenticationResponse($photo);
+            $this->addPhoto($photoObject);
         }
     }
 
