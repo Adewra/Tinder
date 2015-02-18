@@ -70,6 +70,7 @@ class TinderClient {
     {
         $payload = json_encode(
             array(
+                "locale" => "en-GB",
                 "facebook_token" => $facebookAuthenticationToken,
                 "facebook_id" => $facebookIdentifier
             )
@@ -87,7 +88,52 @@ class TinderClient {
         }
     }
 
-    public function getPotentialMatches()
+
+    public function getMatchesProfile($tinderIdentifier)
+    {
+        $guzzleResponse = $this->guzzleClient->post('/user/'.$tinderIdentifier, []);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+        }
+    }
+
+    public function getAllExistingData()
+    {
+        $payload = json_encode(
+            array(
+                //"last_activity_date" => "2015-02-15T22:15:21.353Z"
+            )
+        );
+
+        $guzzleResponse = $this->guzzleClient->post('/updates', ['body' => $payload]);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+        }
+    }
+
+    public function getUpdates($lastActivityDate)
+    {
+        $payload = json_encode(
+            array(
+                "last_activity_date" => "2015-02-15T22:15:21.353Z"
+            )
+        );
+
+        $guzzleResponse = $this->guzzleClient->post('/updates', ['body' => $payload]);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+        }
+    }
+
+    public function getMomentsUpdates()
+    {
+        $guzzleResponse = $this->guzzleClient->post('/user/moments', []);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+        }
+    }
+
+    public function getRecommendations()
     {
         $guzzleResponse = $this->guzzleClient->post('/user/recs', []);
         if ($guzzleResponse->getBody()) {
@@ -95,6 +141,66 @@ class TinderClient {
 
             throw new \Exception("Not Implemented");
 
+        }
+    }
+
+    public function getAssets()
+    {
+        $guzzleResponse = $this->guzzleClient->post('/assets', []);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+
+            throw new \Exception("Not Implemented");
+
+        }
+    }
+
+    public function getMeta()
+    {
+        $guzzleResponse = $this->guzzleClient->post('/meta', []);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+
+            throw new \Exception("Not Implemented");
+
+        }
+    }
+
+    public function updateiOSAppSettings()
+    {
+        $payload = json_encode(
+            array(
+                "message_push" => true,
+                "match_push" => true,
+                "moment_like_push" => true,
+                "app_id" => "com.cardify.tinder",
+                "device_token" => "99e603c8ad3ddbdf04376760061b8f9f76db355b55490bd70bb26de4a8031827",
+                "match_request_push"=> true
+            )
+        );
+
+        $guzzleResponse = $this->guzzleClient->post('/user/ping', ['body' => $payload]);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+
+            throw new \Exception("Not Implemented");
+        }
+    }
+
+    public function updateLocation($latitude, $longitude)
+    {
+        $payload = json_encode(
+            array(
+                "lat" => $latitude,
+                "lon" => $longitude
+            )
+        );
+
+        $guzzleResponse = $this->guzzleClient->post('/user/ping', ['body' => $payload]);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+
+            throw new \Exception("Not Implemented");
         }
     }
 

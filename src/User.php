@@ -116,23 +116,6 @@ class User {
         }
     }
 
-    public function updateLocation($latitude, $longitude)
-    {
-        $payload = json_encode(
-            array(
-                "lat" => $latitude,
-                "lon" => $longitude
-            )
-        );
-
-        $guzzleResponse = $this->guzzleClient->post('/user/ping', ['body' => $payload]);
-        if ($guzzleResponse->getBody()) {
-            $response = $guzzleResponse->json();
-
-            throw new \Exception("Not Implemented");
-        }
-    }
-
     private function updateProfile()
     {
         $payload = json_encode(
