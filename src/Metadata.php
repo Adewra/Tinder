@@ -30,8 +30,6 @@ class Metadata {
 
     public function loadFromResponse($response)
     {
-        var_dump($response);
-
         if(isset($authenticationResponse['status']))
             $this->setStatus($authenticationResponse['status']);
 
