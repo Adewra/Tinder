@@ -93,7 +93,7 @@ class TinderClient {
     }
 
 
-    public function getMatchesProfile($tinderIdentifier)
+    public function getPersonsProfile($tinderIdentifier)
     {
         $guzzleResponse = $this->guzzleClient->post('/user/'.$tinderIdentifier, []);
         if ($guzzleResponse->getBody()) {
@@ -123,16 +123,18 @@ class TinderClient {
             }
             foreach($response['blocks'] as $block)
             {
-
+                $this->user->addBlock($block);
             }
             foreach($response['lists'] as $list)
             {
-
+                $this->user->addList($list);
             }
             foreach($response['deleted_lists'] as $deletedList)
             {
-
+                $this->user->addDeletedList($deletedList);
             }
+
+            // Do something with Last Activity Date?
         }
     }
 

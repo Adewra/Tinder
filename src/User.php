@@ -423,13 +423,28 @@ class User extends Person {
         return $this->blocks;
     }
 
+    public function addBlock($block)
+    {
+        array_push($this->blocks, $block);
+    }
+
     public function getLists()
     {
         return $this->lists;
     }
 
+    public function addList($list)
+    {
+        array_push($this->lists, $list);
+    }
+
     public function getDeletedLists()
     {
         return $this->deletedLists;
+    }
+
+    public function addDeletedList($deletedList)
+    {
+        array_push($this->deletedLists, $deletedList);
     }
 } 
