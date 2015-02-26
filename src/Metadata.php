@@ -13,7 +13,7 @@
 namespace Adewra\Tinder;
 
 
-class Meta {
+class Metadata {
 
     private $status;
     private $notifications = array();
@@ -32,6 +32,21 @@ class Meta {
     public function loadFromResponse($response)
     {
         var_dump($response);
+
+        if(isset($authenticationResponse['status']))
+            $this->setStatus($authenticationResponse['status']);
+
+        if(isset($authenticationResponse['notifications']))
+            $this->setNotifications($authenticationResponse['notifications']);
+
+        if(isset($authenticationResponse['groups']))
+            $this->setGroups($authenticationResponse['groups']);
+
+        if(isset($authenticationResponse['rating']))
+            $this->setRating($authenticationResponse['rating']);
+
+        if(isset($authenticationResponse['travel']))
+            $this->setTravel($authenticationResponse['travel']);
 
         if(isset($authenticationResponse['purchases']))
             $this->setPurchases($authenticationResponse['purchases']);

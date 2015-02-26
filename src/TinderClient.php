@@ -24,7 +24,7 @@ class TinderClient {
     private $tinderAuthenticationToken;
     private $user;
     private $assets;
-    private $meta;
+    private $metadata;
 
     function __construct()
     {
@@ -199,27 +199,27 @@ class TinderClient {
         $this->assets = $assets;
     }
 
-    public function requestMeta()
+    public function requestMetadata()
     {
         $guzzleResponse = $this->guzzleClient->get('/meta', []);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
 
-            $meta = new Meta();
+            $meta = new Metadata();
             $meta->loadFromResponse($response);
-            $this->setMeta($meta);
+            $this->setMetadata($meta);
 
         }
     }
 
-    public function getMeta()
+    public function getMetadata()
     {
-        return $this->meta;
+        return $this->metadata;
     }
 
-    private function setMeta(Meta $meta)
+    private function setMetadata(Metadata $metadata)
     {
-        $this->meta = $meta;
+        $this->metadata = $metadata;
     }
 
     public function updateiOSAppSettings()
