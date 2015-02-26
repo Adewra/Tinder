@@ -23,6 +23,8 @@ class TinderClient {
     private $guzzleClient;
     private $tinderAuthenticationToken;
     private $user;
+    private $assets;
+    private $meta;
 
     function __construct()
     {
@@ -106,6 +108,7 @@ class TinderClient {
         if($this->user == null)
             throw new \Exception("Cannot load existing data without a user being loaded first.");
 
+        // To load up exiting data and not a delta update, the payload must be empty.
         $payload = json_encode(
             array(
                 //"last_activity_date" => "2015-02-15T22:15:21.353Z"
@@ -140,6 +143,9 @@ class TinderClient {
 
     public function getUpdates($lastActivityDate)
     {
+        if($this->user == null)
+            throw new \Exception("Cannot load updated data without a user being loaded first.");
+
         $payload = json_encode(
             array(
                 "last_activity_date" => "2015-02-15T22:15:21.353Z"
@@ -171,26 +177,49 @@ class TinderClient {
         }
     }
 
-    public function getAssets()
+    public function requestAssets()
     {
-        $guzzleResponse = $this->guzzleClient->post('/assets', []);
+        $guzzleResponse = $this->guzzleClient->get('/assets', []);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
 
-            throw new \Exception("Not Implemented");
+            $assets = new Assets();
+            $assets->loadFromResponse($response);
+            $this->setAssets($assets);
+        }
+    }
+
+    public function getAssets()
+    {
+        return $this->assets;
+    }
+
+    private function setAssets(Assets $assets)
+    {
+        $this->assets = $assets;
+    }
+
+    public function requestMeta()
+    {
+        $guzzleResponse = $this->guzzleClient->get('/meta', []);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+
+            $meta = new Meta();
+            $meta->loadFromResponse($response);
+            $this->setMeta($meta);
 
         }
     }
 
     public function getMeta()
     {
-        $guzzleResponse = $this->guzzleClient->post('/meta', []);
-        if ($guzzleResponse->getBody()) {
-            $response = $guzzleResponse->json();
+        return $this->meta;
+    }
 
-            throw new \Exception("Not Implemented");
-
-        }
+    private function setMeta(Meta $meta)
+    {
+        $this->meta = $meta;
     }
 
     public function updateiOSAppSettings()
