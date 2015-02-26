@@ -12,14 +12,13 @@
 
 namespace Adewra\Tinder;
 
-
 class Metadata {
 
     private $status;
     private $notifications = array();
     private $groups = array();
-    private $rating= array();
-    private $travel = array();
+    private $rating;
+    private $travel;
     private $versions = array();
     private $globals = array();
     private $purchases = array();
@@ -56,6 +55,76 @@ class Metadata {
 
         if(isset($authenticationResponse['globals']))
             $this->setGlobals($authenticationResponse['globals']);
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    private function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getNotifications()
+    {
+        return $this->notifications;
+    }
+
+    private function setNotifications($notifications)
+    {
+        foreach($notifications as $notification)
+        {
+            $this->addNotification($notification);
+        }
+    }
+
+    private function addNotification($notification)
+    {
+        array_push($this->notifications, $notification);
+    }
+
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    private function setGroups($groups)
+    {
+        foreach($groups as $group)
+        {
+            $this->addGroup($group);
+        }
+    }
+
+    private function addGroup($group)
+    {
+        array_push($this->groups, $group);
+    }
+
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    private function setRating($rating)
+    {
+        $rating = new Metadata\Rating();
+        $rating->loadFromResponse($rating);
+        $this->rating = $rating;
+    }
+
+    public function getTravel()
+    {
+        return $this->travel;
+    }
+
+    private function setTravel($travel)
+    {
+        $travel = new Metadata\Travel();
+        $travel->loadFromResponse($travel);
+        $this->travel = $travel;
     }
 
     public function getPurchases()
