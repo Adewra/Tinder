@@ -15,4 +15,124 @@ namespace Adewra\Tinder;
 
 class Message {
 
+    private $_id;
+    private $matchIdentfier;
+    private $to;
+    private $from;
+    private $message;
+    private $sentDate;
+    private $createdDate;
+    private $timestamp;
+
+    function __construct()
+    {
+
+    }
+
+    public function loadFromResponse($response)
+    {
+        if (isset($response['_id']))
+            $this->setIdentifier($response['_id']);
+
+        if (isset($response['match_id']))
+            $this->setMatchIdentifier($response['match_id']);
+
+        if (isset($response['to']))
+            $this->setTo($response['to']);
+
+        if (isset($response['from']))
+            $this->setFrom($response['from']);
+
+        if (isset($response['message']))
+            $this->setMessage($response['message']);
+
+        if (isset($response['sent_date']))
+            $this->setSentDate($response['sent_date']);
+
+        if (isset($response['created_date']))
+            $this->setCreatedDate($response['created_date']);
+
+        if (isset($response['timestamp']))
+            $this->setTimestamp($response['timestamp']);
+    }
+
+    public function getIdentifier()
+    {
+        return $this->_id;
+    }
+
+    private function setIdentifier($identifier)
+    {
+        $this->_id = $identifier;
+    }
+
+    public function getMatchIdentifier()
+    {
+        return $this->matchIdentfier;
+    }
+
+    private function setMatchIdentifier($matchIdentifier)
+    {
+        $this->matchIdentfier = $matchIdentifier;
+    }
+
+    public function getTo()
+    {
+        return $this->to;
+    }
+
+    private function setTo($to)
+    {
+        $this->to = $to;
+    }
+
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    private function setFrom($from)
+    {
+        $this->from = $from;
+    }
+
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    private function setMessage($message)
+    {
+        $this->message = $message;
+    }
+
+    public function getSentDate()
+    {
+        return $this->sentDate;
+    }
+
+    private function setSentDate($sentDate)
+    {
+        $this->sentDate = $sentDate;
+    }
+
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
+    }
+
+    private function setCreatedDate($createdDate)
+    {
+        $this->createdDate = $createdDate;
+    }
+
+    public function getTimestamp()
+    {
+        return $this->timestamp;
+    }
+
+    private function setTimestamp($timestamp)
+    {
+        $this->timestamp = $timestamp;
+    }
 } 
