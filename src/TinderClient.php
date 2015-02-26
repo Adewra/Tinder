@@ -15,6 +15,7 @@ namespace Adewra\Tinder;
 require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception;
 use Adewra\Tinder\User;
 
 class TinderClient {
@@ -29,11 +30,8 @@ class TinderClient {
                 'base_url' => ['https://api.gotinder.com', []],
                 'defaults' => [
                     'headers' => [  'X-Auth-Token'  =>  '00000000-0000-4000-A000-000000000000',
-                                    'Content-type'  =>  'application/json',
-                                    //'app_version'   =>  3,
-                                    //'platform'      =>  'ios',
-                                    'User-agent'    =>  'Tinder Android Version 2.2.3',
-                                    'os_version'    =>  '16',
+                                    'Content-Type'  =>  'application/json',
+                                    'User-Agent'    =>  'Tinder Android Version 2.2.3',
                                     'Accept'        =>  'application/json']
                 ]
             ]);
@@ -76,15 +74,21 @@ class TinderClient {
             )
         );
 
-        $guzzleResponse = $this->guzzleClient->post('/auth', ['body' => $payload, 'debug' => true]);
-        if ($guzzleResponse->getBody())
-        {
-            $response = $guzzleResponse->json();
-            $this->setTinderAuthenticationToken($response['token']);
+        $guzzleResponse = $this->guzzleClient->post('/auth', ['body' => $payload]);
+        try {
+            if ($guzzleResponse->getBody()) {
+                $response = $guzzleResponse->json();
+                $this->setTinderAuthenticationToken($response['token']);
 
-            $user = new User($this->guzzleClient);
-            $user->loadFromAuthenticationResponse($response['user']);
-            $this->setTinderUser($user);
+                $user = new User($this->guzzleClient);
+                $user->loadFromAuthenticationResponse($response['user']);
+                $this->setTinderUser($user);
+            }
+        }
+        catch(Exception\ServerException $ex)
+        {
+            //if($ex->getCode() == 500)
+            //    throw new \Exception("Unspecified error, check your Facebook Token.");
         }
     }
 
@@ -99,6 +103,9 @@ class TinderClient {
 
     public function getAllExistingData()
     {
+        if($this->user == null)
+            throw new \Exception("Cannot load existing data without a user being loaded first.");
+
         $payload = json_encode(
             array(
                 //"last_activity_date" => "2015-02-15T22:15:21.353Z"
@@ -108,6 +115,24 @@ class TinderClient {
         $guzzleResponse = $this->guzzleClient->post('/updates', ['body' => $payload]);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
+            foreach($response['matches'] as $match)
+            {
+                $matchObject = new Match();
+                $matchObject->loadFromResponse($match);
+                $this->user->addMatch($matchObject);
+            }
+            foreach($response['blocks'] as $block)
+            {
+
+            }
+            foreach($response['lists'] as $list)
+            {
+
+            }
+            foreach($response['deleted_lists'] as $deletedList)
+            {
+
+            }
         }
     }
 
