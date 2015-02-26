@@ -94,11 +94,13 @@ class Metadata {
     {
         foreach($groups as $group)
         {
+            $groupObject = new Metadata\Group();
+            $groupObject->loadFromResponse($group);
             $this->addGroup($group);
         }
     }
 
-    private function addGroup($group)
+    private function addGroup(Group $group)
     {
         array_push($this->groups, $group);
     }
