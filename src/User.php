@@ -14,29 +14,25 @@ namespace Adewra\Tinder;
 
 use GuzzleHttp\Client;
 
-class User {
+class User extends Person {
 
     /* Fields */
     private $guzzleClient;
-    private $messages = array();
+    private $matches = array();
+    private $blocks = array();
+    private $lists = array();
+    private $deletedLists = array();
 
-    private $_id;
     private $activeTime;
     private $createDate;
     private $ageFilterMax;
     private $ageFilterMin;
     private $apiToken;
-    private $bio;
-    private $birthDate;
     private $distanceFilter;
     private $fullName;
     private $groups = array();
-    private $gender;
     private $genderFilter;
-    private $name;
-    private $pingTime;
     private $discoverable;
-    private $photos = array();
     private $versions = array();
     private $globals = array();
     private $purchases = array();
@@ -135,16 +131,6 @@ class User {
         }
     }
 
-    public function getIdentifier()
-    {
-        return $this->_id;
-    }
-
-    private function setIdentifier($identifier)
-    {
-        $this->_id = $identifier;
-    }
-
     public function getActiveTime()
     {
         return $this->activeTime;
@@ -207,26 +193,6 @@ class User {
         $this->apiToken = $apiToken;
     }
 
-    public function getBio()
-    {
-        return $this->bio;
-    }
-
-    private function setBio($bio)
-    {
-        $this->bio = $bio;
-    }
-
-    public function getBirthDate()
-    {
-        return $this->birthDate;
-    }
-
-    private function setBirthDate($birthDate)
-    {
-        $this->birthDate = $birthDate;
-    }
-
     public function getDistanceFilter()
     {
         return $this->distanceFilter;
@@ -271,16 +237,6 @@ class User {
         array_push($this->groups, $group);
     }
 
-    public function getGender()
-    {
-        return $this->gender;
-    }
-
-    private function setGender($gender)
-    {
-        $this->gender = $gender;
-    }
-
     public function updateGender($gender)
     {
         $this->gender = $gender;
@@ -297,26 +253,6 @@ class User {
         $this->genderFilter = $genderFilter;
     }
 
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    private function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    function getPingTime()
-    {
-        return $this->pingTime;
-    }
-
-    private function setPingTime($pingTime)
-    {
-        $this->pingTime = $pingTime;
-    }
-
     public function getDiscoverable()
     {
         return $this->discoverable;
@@ -331,26 +267,6 @@ class User {
     {
         $this->discoverable = $discoverable;
         $this->updateProfile();
-    }
-
-    public function getPhotos()
-    {
-        return $this->photos;
-    }
-
-    private function setPhotos($photos)
-    {
-        foreach($photos as $photo)
-        {
-            $photoObject = new Photo();
-            $photoObject->loadFromAuthenticationResponse($photo);
-            $this->addPhoto($photoObject);
-        }
-    }
-
-    private function addPhoto($photo)
-    {
-        array_push($this->photos, $photo);
     }
 
     public function getPurchases()
@@ -465,5 +381,55 @@ class User {
     private function addGlobal($global)
     {
         array_push($this->globals, $global);
+    }
+
+    public function getMatches()
+    {
+        return $this->matches;
+    }
+
+    private function setMatches($matches)
+    {
+        foreach($matches as $match)
+        {
+            $this->addMatch($match);
+        }
+    }
+
+    public function addMatch(Match $match)
+    {
+        array_push($this->matches, $match);
+    }
+
+    public function getMessages()
+    {
+        if(sizeof($this->matches) == 0) return 0;
+
+        $messages = array();
+
+        foreach($this->matches as $match)
+        {
+            foreach($match->getMessages() as $message)
+            {
+                array_push($messages, $message);
+            }
+        }
+
+        return $messages;
+    }
+
+    public function getBlocks()
+    {
+        return $this->blocks;
+    }
+
+    public function getLists()
+    {
+        return $this->lists;
+    }
+
+    public function getDeletedLists()
+    {
+        return $this->deletedLists;
     }
 } 
