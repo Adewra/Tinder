@@ -154,32 +154,9 @@ class Metadata {
 
     private function setVersions($versions)
     {
-        /*
-         *  ["versions"]=>
-              array(5) {
-                ["active_text"]=>
-                string(5) "0.0.0"
-                ["age_filter"]=>
-                string(5) "2.1.0"
-                ["matchmaker"]=>
-                string(5) "2.1.0"
-                ["trending"]=>
-                string(6) "10.0.0"
-                ["trending_active_text"]=>
-                string(6) "10.0.0"
-              }
-
-         */
-
-        foreach($versions as $version)
-        {
-            $this->addVersion($version);
-        }
-    }
-
-    private function addVersion($version)
-    {
-        array_push($this->versions, $version);
+        $versions = new Metadata\Versions();
+        $versions->loadFromResponse($versions);
+        $this->versions = $versions;
     }
 
     public function getGlobals()
