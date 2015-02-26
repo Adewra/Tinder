@@ -13,6 +13,8 @@
 namespace Adewra\Tinder;
 
 
+use Adewra\Tinder\Moment\Moment;
+
 class Person {
 
     private $_id;
@@ -22,6 +24,7 @@ class Person {
     private $name;
     private $pingTime;
     private $photos = array();
+    private $moments = array();
 
     function __construct()
     {
@@ -127,9 +130,29 @@ class Person {
         }
     }
 
-    private function addPhoto($photo)
+    private function addPhoto(Photo $photo)
     {
         array_push($this->photos, $photo);
+    }
+
+    public function getMoments()
+    {
+        return $this->moments;
+    }
+
+    public function setMoments($moments)
+    {
+        foreach($moments as $moment)
+        {
+            $momentObject = new Moment();
+            $momentObject->loadFromResponse($moment);
+            $this->addMoment($momentObject);
+        }
+    }
+
+    private function addMoment(Moment $moment)
+    {
+        array_push($this->moments, $moment);
     }
 
 }
