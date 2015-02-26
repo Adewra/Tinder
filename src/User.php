@@ -12,6 +12,8 @@
 
 namespace Adewra\Tinder;
 
+use Adewra\Tinder\Moment\Moment;
+use Adewra\Tinder\Moment\MomentLike;
 use GuzzleHttp\Client;
 
 class User extends Person {
@@ -22,6 +24,8 @@ class User extends Person {
     private $blocks = array();
     private $lists = array();
     private $deletedLists = array();
+    private $momentsFeed = array();
+    private $momentsLikes = array();
 
     private $activeTime;
     private $createDate;
@@ -323,5 +327,45 @@ class User extends Person {
     public function addDeletedList($deletedList)
     {
         array_push($this->deletedLists, $deletedList);
+    }
+
+    public function getMomentsFeed()
+    {
+        return $this->momentsFeed;
+    }
+
+    public function setMomentsFeed($momentsFeed)
+    {
+        foreach($momentsFeed as $momentInFeed)
+        {
+            $momentObject = new Moment();
+            $momentObject->loadFromResponse($momentInFeed);
+            $this->addMomentInFeed($momentObject);
+        }
+    }
+
+    private function addMomentInFeed(Moment $moment)
+    {
+        array_push($this->momentsFeed, $moment);
+    }
+
+    public function getMomentsLikes()
+    {
+        return $this->momentsLikes;
+    }
+
+    public function setMomentsLikes($momentsLikes)
+    {
+        foreach($momentsLikes as $momentsLike)
+        {
+            $momentLikeObject = new MomentLike();
+            $momentLikeObject->loadFromResponse($momentsLike);
+            $this->addMomentLike($momentLikeObject);
+        }
+    }
+
+    private function addMomentLike(MomentLike $momentLike)
+    {
+        array_push($this->momentsLikes, $momentLike);
     }
 } 

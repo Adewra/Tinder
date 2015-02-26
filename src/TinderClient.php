@@ -158,11 +158,53 @@ class TinderClient {
         }
     }
 
-    public function getMomentsUpdates()
+    public function getUsersMoments()
     {
-        $guzzleResponse = $this->guzzleClient->post('/user/moments', []);
+        $guzzleResponse = $this->guzzleClient->get('/user/moments', []);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
+
+            $this->user->setMoments($response['moments']);
+
+            // Do something with Last Activity Date?
+        }
+    }
+
+    public function getUsersMomentsLikes()
+    {
+        $payload = json_encode(
+            array(
+                "last_moment_id" => "",
+                "last_activity_date" => ""
+            )
+        );
+
+        $guzzleResponse = $this->guzzleClient->get('/feed/likes', ['body' => $payload]);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+
+            $this->user->setMomentsLikes($response['likes']);
+
+            // Do something with Last Activity Date?
+        }
+    }
+
+    public function getMomentsFeed()
+    {
+        $payload = json_encode(
+            array(
+                "last_moment_id" => "",
+                "last_activity_date" => ""
+            )
+        );
+
+        $guzzleResponse = $this->guzzleClient->get('/feed/moments', ['body' => $payload]);
+        if ($guzzleResponse->getBody()) {
+            $response = $guzzleResponse->json();
+
+            $this->user->setMomentsFeed($response['moments']);
+
+            // Do something with Last Activity Date?
         }
     }
 
