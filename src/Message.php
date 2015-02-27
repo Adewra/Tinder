@@ -15,8 +15,8 @@ namespace Adewra\Tinder;
 
 class Message {
 
-    private $_id;
-    private $matchIdentfier;
+    private $identifier;
+    private $matchIdentifier;
     private $to;
     private $from;
     private $message;
@@ -58,22 +58,22 @@ class Message {
 
     public function getIdentifier()
     {
-        return $this->_id;
+        return $this->identifier;
     }
 
     private function setIdentifier($identifier)
     {
-        $this->_id = $identifier;
+        $this->identifier = $identifier;
     }
 
     public function getMatchIdentifier()
     {
-        return $this->matchIdentfier;
+        return $this->matchIdentifier;
     }
 
     private function setMatchIdentifier($matchIdentifier)
     {
-        $this->matchIdentfier = $matchIdentifier;
+        $this->matchIdentifier = $matchIdentifier;
     }
 
     public function getTo()

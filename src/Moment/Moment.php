@@ -103,7 +103,7 @@ class Moment {
 
     private function setMedia($media)
     {
-
+        throw new \Exception("Not yet implemented");
     }
 
     public function getText()
