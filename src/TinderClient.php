@@ -95,11 +95,18 @@ class TinderClient {
     }
 
 
-    public function getPersonsProfile($tinderIdentifier)
+    public function getPerson($tinderIdentifier)
     {
-        $guzzleResponse = $this->guzzleClient->post('/user/'.$tinderIdentifier, []);
+        $guzzleResponse = $this->guzzleClient->get('/user/'.$tinderIdentifier, []);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
+
+            $person = new Person($this->guzzleClient);
+            $person->loadFromResponse($response['results']);
+
+            // Do something with Status?
+
+            return $person;
         }
     }
 
@@ -277,7 +284,7 @@ class TinderClient {
             )
         );
 
-        $guzzleResponse = $this->guzzleClient->post('/user/ping', ['body' => $payload]);
+        $guzzleResponse = $this->guzzleClient->post('/user/devices/ios', ['body' => $payload]);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
 
