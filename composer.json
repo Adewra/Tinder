@@ -1,5 +1,5 @@
 {
-    "name": "adewra/Tinder",
+    "name": "adewra/tinder",
     "description": "A PHP Package for using Tinder's API",
     "license": "GPL-3.0",
     "keywords": ["tinder", "matchmaking", "dating"],
