@@ -33,26 +33,26 @@ class Person {
 
     public function loadFromResponse($response)
     {
-        if(isset($authenticationResponse['_id']))
-            $this->setIdentifier($authenticationResponse['_id']);
+        if(isset($response['_id']))
+            $this->setIdentifier($response['_id']);
 
-        if(isset($authenticationResponse['bio']))
-            $this->setBio($authenticationResponse['bio']);
+        if(isset($response['bio']))
+            $this->setBio($response['bio']);
 
-        if(isset($authenticationResponse['birth_date']))
-            $this->setBirthDate($authenticationResponse['birth_date']);
+        if(isset($response['birth_date']))
+            $this->setBirthDate($response['birth_date']);
 
-        if(isset($authenticationResponse['gender']))
-            $this->setGender($authenticationResponse['gender']);
+        if(isset($response['gender']))
+            $this->setGender($response['gender']);
 
-        if(isset($authenticationResponse['name']))
-            $this->setName($authenticationResponse['name']);
+        if(isset($response['name']))
+            $this->setName($response['name']);
 
-        if(isset($authenticationResponse['ping_time']))
-            $this->setPingTime($authenticationResponse['ping_time']);
+        if(isset($response['ping_time']))
+            $this->setPingTime($response['ping_time']);
 
-        if(isset($authenticationResponse['photos']))
-            $this->setPhotos($authenticationResponse['photos']);
+        if(isset($response['photos']))
+            $this->setPhotos($response['photos']);
     }
 
     public function getIdentifier()
