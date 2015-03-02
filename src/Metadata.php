@@ -164,57 +164,8 @@ class Metadata {
 
     private function setGlobals($globals)
     {
-        /*
-         *  ["globals"]=>
-              array(18) {
-                ["friends"]=>
-                bool(true)
-                ["invite_type"]=>
-                string(6) "client"
-                ["recs_interval"]=>
-                int(20000)
-                ["updates_interval"]=>
-                int(2000)
-                ["recs_size"]=>
-                int(40)
-                ["matchmaker_default_message"]=>
-                string(75) "I want you to meet someone. I introduced you on Tinder www.gotinder.com/app"
-                ["share_default_text"]=>
-                string(312) "<style>body{color:#fff;text-align:center;font-family:HelveticaNeue;text-shadow:0 1px 1px rgba(0,0,0,0.63);}h1{font-size:24px;line-height:24px;margin:0;}p{font-size:16px;margin:8px;}</style><h1>Get a Boost</h1><p><strong>Invite friends</strong> to show up <br/><strong>even higher</strong> in recommendations.</p>"
-                ["boost_decay"]=>
-                int(180)
-                ["boost_up"]=>
-                int(7)
-                ["boost_down"]=>
-                int(8)
-                ["sparks"]=>
-                bool(false)
-                ["kontagent"]=>
-                bool(false)
-                ["sparks_enabled"]=>
-                bool(false)
-                ["kontagent_enabled"]=>
-                bool(false)
-                ["mqtt"]=>
-                bool(false)
-                ["tinder_sparks"]=>
-                bool(true)
-                ["moments_interval"]=>
-                int(30000)
-                ["plus"]=>
-                bool(true)
-              }
-
-         */
-
-        foreach($globals as $global)
-        {
-            $this->addGlobal($global);
-        }
-    }
-
-    private function addGlobal($global)
-    {
-        array_push($this->globals, $global);
+        $globals = new Metadata\Globals();
+        $globals->loadFromResponse($globals);
+        $this->globals = $globals;
     }
 }
