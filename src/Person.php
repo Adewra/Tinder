@@ -12,8 +12,8 @@
 
 namespace Adewra\Tinder;
 
-
-use Adewra\Tinder\Moment\Moment;
+use Adewra\Tinder\Moment;
+use Adewra\Tinder\Media;
 
 class Person {
 
@@ -124,13 +124,13 @@ class Person {
     {
         foreach($photos as $photo)
         {
-            $photoObject = new Photo();
-            $photoObject->loadFromAuthenticationResponse($photo);
+            $photoObject = new Media\Photo();
+            $photoObject->loadFromResponse($photo);
             $this->addPhoto($photoObject);
         }
     }
 
-    private function addPhoto(Photo $photo)
+    private function addPhoto(Media\Photo $photo)
     {
         array_push($this->photos, $photo);
     }
@@ -144,13 +144,13 @@ class Person {
     {
         foreach($moments as $moment)
         {
-            $momentObject = new Moment();
+            $momentObject = new Moment\Moment();
             $momentObject->loadFromResponse($moment);
             $this->addMoment($momentObject);
         }
     }
 
-    private function addMoment(Moment $moment)
+    private function addMoment(Moment\Moment $moment)
     {
         array_push($this->moments, $moment);
     }

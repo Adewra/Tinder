@@ -10,10 +10,10 @@
  * @created      17/02/15 13:00
  */
 
-namespace Adewra\Tinder;
+namespace Adewra\Tinder\Media;
 
 
-class Photo {
+class Photo extends Media {
 
     /* Fields */
     private $id;
@@ -33,51 +33,41 @@ class Photo {
 
     }
 
-    public function loadFromAuthenticationResponse($authenticationResponse)
+    public function loadFromResponse($response)
     {
 
-        if(isset($authenticationResponse['id']))
-            $this->setIdentifier($authenticationResponse['id']);
+        if(isset($response['id']))
+            $this->setIdentifier($response['id']);
 
-        if(isset($authenticationResponse['url']))
-            $this->setURL($authenticationResponse['url']);
+        if(isset($response['url']))
+            $this->setURL($response['url']);
 
-        if(isset($authenticationResponse['processed_files']))
-            $this->setProcessedFiles($authenticationResponse['processed_files']);
+        if(isset($response['processed_files']))
+            $this->setProcessedFiles($response['processed_files']);
 
-        if(isset($authenticationResponse['extension']))
-            $this->setExtension($authenticationResponse['extension']);
+        if(isset($response['extension']))
+            $this->setExtension($response['extension']);
 
-        if(isset($authenticationResponse['fbId']))
-            $this->setFacebookIdentifier($authenticationResponse['fbId']);
+        if(isset($response['fbId']))
+            $this->setFacebookIdentifier($response['fbId']);
 
-        if(isset($authenticationResponse['fileName']))
-            $this->setFileName($authenticationResponse['fileName']);
+        if(isset($response['fileName']))
+            $this->setFileName($response['fileName']);
 
-        if(isset($authenticationResponse['main']))
-            $this->setMain($authenticationResponse['main']);
+        if(isset($response['main']))
+            $this->setMain($response['main']);
 
-        if(isset($authenticationResponse['xdistance_percent']))
-            $this->setXDistancePercent($authenticationResponse['xdistance_percent']);
+        if(isset($response['xdistance_percent']))
+            $this->setXDistancePercent($response['xdistance_percent']);
 
-        if(isset($authenticationResponse['ydistance_percent']))
-            $this->setYDistancePercent($authenticationResponse['ydistance_percent']);
+        if(isset($response['ydistance_percent']))
+            $this->setYDistancePercent($response['ydistance_percent']);
 
-        if(isset($authenticationResponse['xoffset_percent']))
-            $this->setXOffsetPercent($authenticationResponse['xoffset_percent']);
+        if(isset($response['xoffset_percent']))
+            $this->setXOffsetPercent($response['xoffset_percent']);
 
-        if(isset($authenticationResponse['yoffset_percent']))
-            $this->setYOffsetPercent($authenticationResponse['yoffset_percent']);
-    }
-
-    public function getIdentifier()
-    {
-        return $this->id;
-    }
-
-    private function setIdentifier($identifier)
-    {
-        $this->id = $identifier;
+        if(isset($response['yoffset_percent']))
+            $this->setYOffsetPercent($response['yoffset_percent']);
     }
 
     public function getURL()
@@ -88,18 +78,6 @@ class Photo {
     private function setURL($url)
     {
         $this->url = $url;
-    }
-
-    public function getProcessedFiles()
-    {
-        return $this->processedFiles;
-    }
-
-    private function setProcessedFiles($processedFiles)
-    {
-        foreach($processedFiles as $processedFile) {
-            array_push($this->processedFiles, $processedFile);
-        }
     }
 
     public function getExtension()

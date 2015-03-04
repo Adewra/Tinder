@@ -1,8 +1,10 @@
 <?php
 /**
- * Short description for class
+ * Moment is used to represent media shared for a limited period with matches.
  *
  * Long description for class (if any)...
+ *
+ * @todo Add support for lines/graphics drawn over the media
  *
  * @package    Tinder
  * @author     Ally Dewar <ally.dewar@adewra.com>
@@ -12,6 +14,7 @@
 
 namespace Adewra\Tinder\Moment;
 
+use Adewra\Tinder\Media;
 
 class Moment {
 
@@ -42,6 +45,8 @@ class Moment {
 
         if (isset($response['likes_count']))
             $this->setLikesCount($response['likes_count']);
+
+        //var_dump($response['media']);
 
         if (isset($response['media']))
             $this->setMedia($response['media']);
@@ -103,7 +108,14 @@ class Moment {
 
     private function setMedia($media)
     {
-        throw new \Exception("Not yet implemented");
+        $mediaObject = new Media\Media();
+        $mediaObject->loadFromResponse($media);
+        $this->addMedia($mediaObject);
+    }
+
+    private function addMedia(Media\Media $media)
+    {
+        array_push($this->media, $media);
     }
 
     public function getText()

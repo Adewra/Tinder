@@ -1,8 +1,10 @@
 <?php
 /**
- * Short description for class
+ * Group represents groups the Current User is a part of.
  *
- * Long description for class (if any)...
+ * A user of the Tinder application can belong to multiple groups. At
+ * present this field is used to identify the pricing bracket for subscriptions
+ * a feature currently in A/B testing.
  *
  * @package    Tinder
  * @author     Ally Dewar <ally.dewar@adewra.com>

@@ -1,8 +1,8 @@
 <?php
 /**
- * Short description for class
+ * Globals holds the global variables used within the Tinder application.
  *
- * Long description for class (if any)...
+ * Globals holds the global variables used within the Tinder application.
  *
  * @package    Tinder
  * @author     Ally Dewar <ally.dewar@adewra.com>
