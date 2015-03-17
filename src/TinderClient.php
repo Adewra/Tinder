@@ -18,14 +18,37 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception;
 use Adewra\Tinder\User;
 
+/**
+ * Class TinderClient
+ *
+ * @package Adewra\Tinder
+ */
 class TinderClient {
 
+    /**
+     * @var Client
+     */
     private $guzzleClient;
+    /**
+     * @var string Contains Tinder issued Authentication Token for interacting with the API.
+     */
     private $tinderAuthenticationToken;
+    /**
+     * @var User
+     */
     private $user;
+    /**
+     * @var Assets
+     */
     private $assets;
+    /**
+     * @var Metadata
+     */
     private $metadata;
 
+    /**
+     *
+     */
     function __construct()
     {
         $this->guzzleClient = new Client([
@@ -39,16 +62,26 @@ class TinderClient {
             ]);
     }
 
+    /**
+     * @return string Contains Tinder issued Authentication Token for interacting with the API.
+     */
     public function getTinderAuthenticationToken()
     {
         return $this->tinderAuthenticationToken;
     }
 
+    /**
+     * @return User
+     */
     public function getUser()
     {
         return $this->user;
     }
 
+    /**
+     * @param $token
+     * @throws Exception
+     */
     private function setTinderAuthenticationToken($token)
     {
         if(strlen($token) != 36)
@@ -61,11 +94,23 @@ class TinderClient {
         $this->guzzleClient->setDefaultOption('headers/X-Auth-Token', $token);
     }
 
+    /**
+     * @param User $user
+     * @throws \Exception
+     */
     private function setTinderUser(User $user)
     {
+        if($user == null)
+            throw new \Exception("Failed to load User.");
+
         $this->user = $user;
     }
 
+    /**
+     * @param $facebookIdentifier
+     * @param $facebookAuthenticationToken
+     * @throws Exception
+     */
     public function requestTinderAuthenticationToken($facebookIdentifier, $facebookAuthenticationToken)
     {
         $payload = json_encode(
@@ -95,6 +140,10 @@ class TinderClient {
     }
 
 
+    /**
+     * @param $tinderIdentifier
+     * @return Person
+     */
     public function getPerson($tinderIdentifier)
     {
         $guzzleResponse = $this->guzzleClient->get('/user/'.$tinderIdentifier, []);
@@ -110,6 +159,9 @@ class TinderClient {
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function getAllExistingData()
     {
         if($this->user == null)
@@ -148,6 +200,10 @@ class TinderClient {
         }
     }
 
+    /**
+     * @param $lastActivityDate
+     * @throws \Exception
+     */
     public function getUpdates($lastActivityDate)
     {
         if($this->user == null)
@@ -165,8 +221,14 @@ class TinderClient {
         }
     }
 
+    /**
+     *
+     */
     public function getUsersMoments()
     {
+        if($this->user == null)
+            throw new \Exception("Cannot load moments data without a user being loaded first.");
+
         $guzzleResponse = $this->guzzleClient->get('/user/moments', []);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
@@ -177,8 +239,14 @@ class TinderClient {
         }
     }
 
+    /**
+     *
+     */
     public function getUsersMomentsLikes()
     {
+        if($this->user == null)
+            throw new \Exception("Cannot load moments likes data without a user being loaded first.");
+
         $payload = json_encode(
             array(
                 "last_moment_id" => "",
@@ -196,8 +264,14 @@ class TinderClient {
         }
     }
 
+    /**
+     *
+     */
     public function getMomentsFeed()
     {
+        if($this->user == null)
+            throw new \Exception("Cannot load moments feed data without a user being loaded first.");
+
         $payload = json_encode(
             array(
                 "last_moment_id" => "",
@@ -215,17 +289,24 @@ class TinderClient {
         }
     }
 
+    /**
+     *
+     */
     public function getRecommendations()
     {
-        $guzzleResponse = $this->guzzleClient->post('/user/recs', []);
+        $guzzleResponse = $this->guzzleClient->get('/user/recs', []);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
 
-            throw new \Exception("Not Implemented");
+            $this->user->setRecommendations($response['results']);
 
+            // Do something with Status?
         }
     }
 
+    /**
+     *
+     */
     public function requestAssets()
     {
         $guzzleResponse = $this->guzzleClient->get('/assets', []);
@@ -238,16 +319,25 @@ class TinderClient {
         }
     }
 
+    /**
+     * @return Assets
+     */
     public function getAssets()
     {
         return $this->assets;
     }
 
+    /**
+     * @param Assets $assets
+     */
     private function setAssets(Assets $assets)
     {
         $this->assets = $assets;
     }
 
+    /**
+     *
+     */
     public function requestMetadata()
     {
         $guzzleResponse = $this->guzzleClient->get('/meta', []);
@@ -261,16 +351,25 @@ class TinderClient {
         }
     }
 
+    /**
+     * @return Metadata
+     */
     public function getMetadata()
     {
         return $this->metadata;
     }
 
+    /**
+     * @param Metadata $metadata
+     */
     private function setMetadata(Metadata $metadata)
     {
         $this->metadata = $metadata;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function updateiOSAppSettings()
     {
         $payload = json_encode(
@@ -292,6 +391,10 @@ class TinderClient {
         }
     }
 
+    /**
+     * @param $latitude
+     * @param $longitude
+     */
     public function updateLocation($latitude, $longitude)
     {
         $payload = json_encode(
@@ -309,39 +412,49 @@ class TinderClient {
         }
     }
 
+    /**
+     * @param $tinderIdentifier
+     */
     public function likeSomebody($tinderIdentifier)
     {
         $guzzleResponse = $this->guzzleClient->post('/like/'.$tinderIdentifier, []);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
 
-            throw new \Exception("Not Implemented");
+            var_dump($response);
 
-            if($response['match'] == true) {
+            if($response['match'] === true) {
 
-            } else if($response['match'] == false) {
+            } else if($response['match'] === false) {
 
             }
 
         }
     }
 
+    /**
+     * @param $tinderIdentifier
+     */
     public function passSomebody($tinderIdentifier)
     {
         $guzzleResponse = $this->guzzleClient->post('/pass/'.$tinderIdentifier, []);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
 
-            throw new \Exception("Not Implemented");
+            var_dump($response);
 
-            if($response['match'] == true) {
+            if($response['match'] === true) {
 
-            } else if($response['match'] == false) {
+            } else if($response['match'] === false) {
 
             }
         }
     }
 
+    /**
+     * @param $tinderIdentifier
+     * @param $cause
+     */
     public function reportUser($tinderIdentifier, $cause)
     {
         $payload = json_encode(
@@ -353,6 +466,8 @@ class TinderClient {
         $guzzleResponse = $this->guzzleClient->post('/report/'.$tinderIdentifier, ['body' => $payload]);
         if ($guzzleResponse->getBody()) {
             $response = $guzzleResponse->json();
+
+            var_dump($response);
         }
     }
 } 
