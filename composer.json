@@ -1,8 +1,8 @@
 {
     "name": "adewra/tinder",
-    "description": "A PHP Package for using Tinder's API",
+    "description": "Ability to access and execute Tinder's API used by their mobile applications.",
     "license": "GPL-3.0",
-    "keywords": ["tinder", "matchmaking", "dating"],
+    "keywords": ["tinder", "matchmaking", "dating", "iOS", "android"],
     "authors": [
         {
             "name": "Ally Dewar",
