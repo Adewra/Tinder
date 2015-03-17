@@ -26,6 +26,7 @@ class User extends Person {
     private $deletedLists = array();
     private $momentsFeed = array();
     private $momentsLikes = array();
+    private $recommendations = array();
 
     private $activeTime;
     private $createDate;
@@ -367,5 +368,25 @@ class User extends Person {
     private function addMomentLike(MomentLike $momentLike)
     {
         array_push($this->momentsLikes, $momentLike);
+    }
+
+    public function getRecommendations()
+    {
+        return $this->recommendations;
+    }
+
+    public function setRecommendations($recommendations)
+    {
+        foreach($recommendations as $recommendation)
+        {
+            $recommendationObject = new Recommendation();
+            $recommendationObject->loadFromResponse($recommendation);
+            $this->addRecommendation($recommendationObject);
+        }
+    }
+
+    private function addRecommendation(Recommendation $recommendation)
+    {
+        array_push($this->recommendations, $recommendation);
     }
 } 
